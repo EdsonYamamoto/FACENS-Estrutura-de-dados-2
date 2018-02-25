@@ -50,10 +50,16 @@ namespace ProjetoGrafos.DataStructure
         /// <summary>
         /// Encontra o nó através do seu nome.
         /// </summary>
-        /// <param name="name">O nome do nó.</param>
-        /// <returns>O nó encontrado ou nulo caso não encontre nada.</returns>
+        /// <param name="name">O nome do nó.</param>não encontre nada.</retur
+        /// <returns>O nó encontrado ou nulo caso ns>
         private Node Find(string name)
         {
+            foreach (Node a in this.nodes)
+            {
+                if (a.Name == name)
+                    return a;
+            }
+
             return null;
         }
 
@@ -64,6 +70,7 @@ namespace ProjetoGrafos.DataStructure
         /// <param name="info">A informação a ser armazenada no nó.</param>
         public void AddNode(string name)
         {
+            this.nodes.Add(new Node(name,null));
         }
 
         /// <summary>
@@ -73,6 +80,7 @@ namespace ProjetoGrafos.DataStructure
         /// <param name="info">A informação a ser armazenada no nó.</param>
         public void AddNode(string name, object info)
         {
+            this.nodes.Add(new Node(name, info));
         }
 
         /// <summary>
@@ -91,6 +99,7 @@ namespace ProjetoGrafos.DataStructure
         /// <param name="cost">O cust associado.</param>
         public void AddEdge(string from, string to, double cost)
         {
+            Find(from).AddEdge(Find(to), cost);
         }
 
         /// <summary>
@@ -100,7 +109,27 @@ namespace ProjetoGrafos.DataStructure
         /// <returns></returns>
         public Node[] GetNeighbours(string from)
         {
-            return null;
+            Node[] nos = new Node[0];
+
+            foreach (Node n in nodes)
+            {
+                foreach (Edge e in n.Edges)
+                {
+                    if (e.To.Name == from)
+                    {
+                        Array.Resize(ref nos, nos.Length + 1);
+                        nos[nos.Length - 1] = n;
+                    }
+                    /*
+                    if (Find(e.From.Name).Name == from)
+                    {
+                        Array.Resize(ref nos, nos.Length + 1);
+                        nos[nos.Length - 1] = n;
+                    }
+                    */
+                }
+            }
+            return nos;
         }
 
         /// <summary>

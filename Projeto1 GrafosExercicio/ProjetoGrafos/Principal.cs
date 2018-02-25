@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-//using Glee = Microsoft.Glee.Drawing;
-//using GleeUI = Microsoft.Glee.GraphViewerGdi;
+using Glee = Microsoft.Glee.Drawing;
+using GleeUI = Microsoft.Glee.GraphViewerGdi;
 using EDA = ProjetoGrafos.DataStructure;
 
 namespace ProjetoGrafos
@@ -51,6 +51,7 @@ namespace ProjetoGrafos
             cmbNodeTo.Items.Clear();
             cmbNodeNeighbourhood.Items.Clear();
             lstArcs.Items.Clear();
+            txtCost.Clear();
             // Carrega nós e agrupa arcos..
             foreach (EDA.Node node in nodes)
             {
@@ -76,7 +77,7 @@ namespace ProjetoGrafos
         /// </summary>
         private void DrawGraph(EDA.Node[] highlightedNodes)
         {
-            /*
+            
             List<EDA.Edge> edges = new List<EDA.Edge>();
             Glee.Graph drawingGraph = new Glee.Graph("Grafo - EDA2");
             // Adiciona nós ao grafo..
@@ -105,7 +106,7 @@ namespace ProjetoGrafos
             viewer.Dock = System.Windows.Forms.DockStyle.Fill;
             pnlGraph.Controls.Clear();
             pnlGraph.Controls.Add(viewer);
-            */
+            
         }
 
         #endregion
@@ -216,5 +217,9 @@ namespace ProjetoGrafos
 
         #endregion
 
+        private void lstArcs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

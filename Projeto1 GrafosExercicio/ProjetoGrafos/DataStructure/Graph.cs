@@ -71,7 +71,7 @@ namespace ProjetoGrafos.DataStructure
         public void AddNode(string name)
         {
             Node n = Find(name);
-            if(n!=null)
+            if(n==null)
                 this.nodes.Add(new Node(name,null));
         }
 
@@ -83,7 +83,7 @@ namespace ProjetoGrafos.DataStructure
         public void AddNode(string name, object info)
         {
             Node n = Find(name);
-            if (n != null)
+            if (n == null)
                 this.nodes.Add(new Node(name, info));
         }
 
@@ -153,15 +153,27 @@ namespace ProjetoGrafos.DataStructure
         /// <returns></returns>
         public bool IsValidPath(ref Node[] nodes, params string[] path)
         {
-            foreach (Node n in nodes)
+            bool passou;
+            Node n;
+            for (int i = 0; i < path.Length-1; i++)
             {
-                for (int i = 0; i < nodes.Length; i++)
+                passou = false;
+                foreach(Node nozinho in GetNeighbours(path[i + 1]))
                 {
-                    n.Edges[i].To
+
+                    if (Find(path[i]) == nozinho)
+                    {
+                        passou = true;
+                        Array.Resize(ref nodes, Nodes.Length + 1);
+                        nodes[nodes.Length - 1] = nozinho;
+                    }
+
                 }
+                if (!passou)
+                    return false;
             }
+            return true;
             
-            return false;
         }
 
         #endregion

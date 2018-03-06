@@ -54,7 +54,7 @@ namespace ProjetoGrafos.DataStructure
         /// <returns>O nó encontrado ou nulo caso ns>
         private Node Find(string name)
         {
-            foreach (Node a in this.nodes)
+            foreach (Node a in nodes)
             {
                 if (a.Name == name)
                     return a;
@@ -70,7 +70,9 @@ namespace ProjetoGrafos.DataStructure
         /// <param name="info">A informação a ser armazenada no nó.</param>
         public void AddNode(string name)
         {
-            this.nodes.Add(new Node(name,null));
+            Node n = Find(name);
+            if(n==null)
+                this.nodes.Add(new Node(name,null));
         }
 
         /// <summary>
@@ -80,7 +82,9 @@ namespace ProjetoGrafos.DataStructure
         /// <param name="info">A informação a ser armazenada no nó.</param>
         public void AddNode(string name, object info)
         {
-            this.nodes.Add(new Node(name, info));
+            Node n = Find(name);
+            if (n == null)
+                this.nodes.Add(new Node(name, info));
         }
 
         /// <summary>
@@ -89,6 +93,22 @@ namespace ProjetoGrafos.DataStructure
         /// <param name="name">O nome do nó a ser removido.</param>
         public void RemoveNode(string name)
         {
+            Node n = Find(name);
+            
+                foreach(Node no in nodes)
+                {
+                    for(int i = 0; i < no.Edges.Count; i++)
+                    {
+                        Console.WriteLine(i);
+                        if (no.Edges[i].From == n || no.Edges[i].To == n)
+                        {
+                            no.Edges.Remove(no.Edges[i]);
+                        i--;
+                        }
+                    }
+                }
+            
+            nodes.Remove(n);
         }
 
         /// <summary>
@@ -120,13 +140,6 @@ namespace ProjetoGrafos.DataStructure
                         Array.Resize(ref nos, nos.Length + 1);
                         nos[nos.Length - 1] = n;
                     }
-                    /*
-                    if (Find(e.From.Name).Name == from)
-                    {
-                        Array.Resize(ref nos, nos.Length + 1);
-                        nos[nos.Length - 1] = n;
-                    }
-                    */
                 }
             }
             return nos;
@@ -140,7 +153,27 @@ namespace ProjetoGrafos.DataStructure
         /// <returns></returns>
         public bool IsValidPath(ref Node[] nodes, params string[] path)
         {
-            return false;
+            bool passou;
+            Node n;
+            for (int i = 0; i < path.Length-1; i++)
+            {
+                passou = false;
+                foreach(Node nozinho in GetNeighbours(path[i + 1]))
+                {
+
+                    if (Find(path[i]) == nozinho)
+                    {
+                        passou = true;
+                        Array.Resize(ref nodes, Nodes.Length + 1);
+                        nodes[nodes.Length - 1] = nozinho;
+                    }
+
+                }
+                if (!passou)
+                    return false;
+            }
+            return true;
+            
         }
 
         #endregion

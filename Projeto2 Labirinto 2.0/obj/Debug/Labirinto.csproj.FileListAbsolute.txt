@@ -1,0 +1,9 @@
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto2 Labirinto 2.0\bin\Debug\Labirinto.exe.config
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto2 Labirinto 2.0\bin\Debug\Labirinto.exe
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto2 Labirinto 2.0\bin\Debug\Labirinto.pdb
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto2 Labirinto 2.0\obj\Debug\Labirinto.Principal.resources
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto2 Labirinto 2.0\obj\Debug\Labirinto.Properties.Resources.resources
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto2 Labirinto 2.0\obj\Debug\Labirinto.csproj.GenerateResource.Cache
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto2 Labirinto 2.0\obj\Debug\Labirinto.csproj.CoreCompileInputs.cache
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto2 Labirinto 2.0\obj\Debug\Labirinto.exe
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto2 Labirinto 2.0\obj\Debug\Labirinto.pdb

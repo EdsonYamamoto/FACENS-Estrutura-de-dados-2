@@ -56,6 +56,7 @@ namespace ProjetoGrafos.DataStructure
         {
             this.Name = name;
             this.Info = info;
+            this.Visited = false;
         }
 
         #endregion

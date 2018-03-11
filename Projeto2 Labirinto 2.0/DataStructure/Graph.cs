@@ -16,6 +16,8 @@ namespace ProjetoGrafos.DataStructure
         /// <summary>
         /// Lista de nós que compõe o grafo.
         /// </summary>
+        private Stack<Node> pilha;
+        private Queue<Node> fila;
         private List<Node> nodes;
 
         #endregion
@@ -39,6 +41,8 @@ namespace ProjetoGrafos.DataStructure
         /// </summary>
         public Graph()
         {
+            this.fila = new Queue<Node>();
+            this.pilha = new Stack<Node>();
             this.nodes = new List<Node>();
         }
 
@@ -69,31 +73,67 @@ namespace ProjetoGrafos.DataStructure
 
         public List<Node> BreadthFirstSearch(string begin)
         {
-            return null;
+            Node no = Find(begin);
+            foreach (Node n in nodes)
+                n.Visited = false;
+            no.Visited = true;
+            List<Node> nos = new List<Node>();
+            nos.Add(no);
+            fila.Enqueue(no);
+
+            while (fila.Count != 0)
+            {
+                no = fila.Dequeue();
+                foreach (Edge e in no.Edges)
+                {
+                    if (e.To.Visited == false)
+                    {
+                        nos.Add(e.To);
+                        fila.Enqueue(e.To);
+                        e.To.Visited = true;
+                    }
+                }
+            }
+
+            /*
+            foreach (Node noz in nos)
+            {
+                //Console.WriteLine(noz.Name+" "+noz.Info);
+                if (noz.Info.ToString() == "S")
+                    
+            }
+            */
+            
+            return nos;
         }
 
         public List<Node> DepthFirstSearch(string begin)
         {
-            Node noInicio = Find(begin);
-            List<Node> lista = new List<Node>();
-            vaiProfundo(lista, noInicio);
-            return lista;
-        }
+            Node no = Find(begin);
+            pilha.Push(no);
+            no.Visited = true;
+            List<Node> nos = new List<Node>();
+            nos.Add(no);
+            
 
-        public void vaiProfundo(List<Node> lista, Node n)
-        {
-            n.Visited = true;
-            lista.Add(n);
-            foreach (Edge e in n.Edges)
+            while (pilha.Count > 0)
             {
-                if (e.To.Visited != true)
+                no = pilha.Pop();
+                nos.Add(no);
+                foreach (Edge e in no.Edges)
                 {
-                    vaiProfundo(lista, e.To);
+                    if (!e.To.Visited)
+                    {
+                        e.To.Visited = true;
+                        pilha.Push(e.To);
+                    }
                 }
             }
-            n.Visited = true;
-        }
 
+
+            return nos;
+        }
+        
         /// <summary>
         /// Adiciona um nó ao grafo.
         /// </summary>

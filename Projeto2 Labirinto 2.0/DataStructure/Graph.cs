@@ -68,7 +68,45 @@ namespace ProjetoGrafos.DataStructure
 
         public List<Node> ShortestPath(string begin, string end)
         {
-            return null;
+
+            Graph arvore = new Graph();
+            arvore.AddNode(begin, 0);
+
+            //loop de busca do destino
+            while (arvore.Find(begin) == null)
+            {
+                double min = -1;
+                Node nmin = null;
+                string destmin = "";
+
+                //percorrendo nós da arvore
+                foreach (Node n in arvore.nodes)
+                {
+                    //percorrendo os arcos que saem de n
+                    Node ng = this.Find(n.Name);
+                    foreach(Edge a in ng.Edges)
+                    {
+                        //testando se o alvo ja esta na arvore
+                        if(arvore.Find(a.To.Name)== null)
+                        {
+                            double dist = Convert.ToDouble(n.Info) + Convert.ToDouble(a.Cost);
+                            if (min == -1 || dist < min)
+                            {
+                                min = dist;
+                                nmin = a.To;
+                                destmin = n.Name;
+                            }
+
+                        }
+                    }
+                }
+                //adicionar o menor arco a arvore
+                arvore.AddNode(nmin.Name, min);
+                arvore.AddEdge(nmin.Name, destmin, 1);
+            }
+            //mostrar o caminho
+
+            return arvore.BreadthFirstSearch(end);
         }
 
         public List<Node> BreadthFirstSearch(string begin)
@@ -90,20 +128,12 @@ namespace ProjetoGrafos.DataStructure
                     {
                         nos.Add(e.To);
                         fila.Enqueue(e.To);
+
                         e.To.Visited = true;
+                        e.To.Parent = no;
                     }
                 }
             }
-
-            /*
-            foreach (Node noz in nos)
-            {
-                //Console.WriteLine(noz.Name+" "+noz.Info);
-                if (noz.Info.ToString() == "S")
-                    
-            }
-            */
-            
             return nos;
         }
 
@@ -126,11 +156,10 @@ namespace ProjetoGrafos.DataStructure
                     {
                         e.To.Visited = true;
                         pilha.Push(e.To);
+                        e.To.Parent = no;
                     }
                 }
             }
-
-
             return nos;
         }
         

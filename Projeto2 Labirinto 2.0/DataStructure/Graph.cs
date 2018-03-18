@@ -65,48 +65,48 @@ namespace ProjetoGrafos.DataStructure
 
             return null;
         }
-
         public List<Node> ShortestPath(string begin, string end)
         {
+            Graph grafoAux = new Graph();
 
-            Graph arvore = new Graph();
-            arvore.AddNode(begin, 0);
+            Node noInicio = this.Find(begin);
+            Node noFim = this.Find(end);
+            Node proxNo = null;
+            Node NoDoGrafo = null;
 
-            //loop de busca do destino
-            while (arvore.Find(begin) == null)
+            List<Node> lista = new List<Node>();
+
+            double custo;
+
+            grafoAux.AddNode(begin, 0);
+
+            while (grafoAux.Find(end) == null)
             {
-                double min = -1;
-                Node nmin = null;
-                string destmin = "";
+                custo = -1;
 
-                //percorrendo nós da arvore
-                foreach (Node n in arvore.nodes)
+                foreach (Node n in grafoAux.nodes)
                 {
-                    //percorrendo os arcos que saem de n
-                    Node ng = this.Find(n.Name);
-                    foreach(Edge a in ng.Edges)
-                    {
-                        //testando se o alvo ja esta na arvore
-                        if(arvore.Find(a.To.Name)== null)
-                        {
-                            double dist = Convert.ToDouble(n.Info) + Convert.ToDouble(a.Cost);
-                            if (min == -1 || dist < min)
-                            {
-                                min = dist;
-                                nmin = a.To;
-                                destmin = n.Name;
-                            }
+                    NoDoGrafo = this.Find(n.Name);
 
+                    foreach (Edge e in NoDoGrafo.Edges)
+                    {
+                        if (grafoAux.Find(e.To.Name) == null)
+                        {
+                            if (e.Cost + Convert.ToDouble(n.Info) < custo || custo == -1)
+                            {
+                                custo = e.Cost + Convert.ToDouble(n.Info);
+                                e.To.Parent = NoDoGrafo;
+                                proxNo = NoDoGrafo;
+                                noInicio = e.To;
+                            }
                         }
                     }
                 }
-                //adicionar o menor arco a arvore
-                arvore.AddNode(nmin.Name, min);
-                arvore.AddEdge(nmin.Name, destmin, 1);
+                grafoAux.AddNode(noInicio.Name, custo);
+                grafoAux.Find(noInicio.Name).Parent = proxNo;
+                lista.Add(this.Find(noInicio.Name));
             }
-            //mostrar o caminho
-
-            return arvore.BreadthFirstSearch(end);
+            return lista;
         }
 
         public List<Node> BreadthFirstSearch(string begin)
@@ -136,7 +136,6 @@ namespace ProjetoGrafos.DataStructure
             }
             return nos;
         }
-
         public List<Node> DepthFirstSearch(string begin)
         {
             Node no = Find(begin);

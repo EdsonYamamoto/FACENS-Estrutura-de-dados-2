@@ -1,0 +1,16 @@
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\obj\Debug\ProjetoGrafos.csprojResolveAssemblyReference.cache
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\obj\Debug\ProjetoGrafos.Principal.resources
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\obj\Debug\ProjetoGrafos.Properties.Resources.resources
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\obj\Debug\ProjetoGrafos.csproj.GenerateResource.Cache
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\obj\Debug\ProjetoGrafos.csproj.CoreCompileInputs.cache
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\bin\Debug\ProjetoGrafos.exe.config
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\bin\Debug\ProjetoGrafos.exe
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\bin\Debug\ProjetoGrafos.pdb
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\bin\Debug\Microsoft.GLEE.dll
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\bin\Debug\Microsoft.GLEE.Drawing.dll
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\bin\Debug\Microsoft.GLEE.GraphViewerGDI.dll
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\bin\Debug\Microsoft.GLEE.pdb
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\bin\Debug\Microsoft.GLEE.Drawing.pdb
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\bin\Debug\Microsoft.GLEE.GraphViewerGDI.pdb
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\obj\Debug\ProjetoGrafos.exe
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto3 ProjetoGrafosExercicio - MST\ProjetoGrafosExercicio - MST - Resolver\ProjetoGrafos\obj\Debug\ProjetoGrafos.pdb

@@ -197,47 +197,64 @@ namespace ProjetoGrafos.DataStructure
         public Graph Prim(string name)
         {
             Graph arvore = new Graph();
-            Node no = null;
+            
             Random rdn = new Random();
-            Edge arestaMenorCusto = null;
             List<Node> listaNos = new List<Node>();
             List<Edge> listaArestas = new List<Edge>();
-            int contadorNos=-1;
+            List<Edge> listaArestasMenorCusto = new List<Edge>();
+            Edge menorAresta = null;
+            int contadorNos = -1;
+            double cost = 0;
+            //arvore.AddNode(no.Name);
 
-            no = this.nodes[rdn.Next(this.nodes.Count)];
-            arvore.AddNode(no.Name);
-            listaNos.Add(no);
-            if (no.Edges.Count != 0)
+            listaNos.Add(this.nodes[rdn.Next(this.nodes.Count)]);
+            if (listaNos[0].Edges.Count>0)
             {
                 do{
+                    //para cada aresta encontrada na lista dos nos armazenados
+                    //guarda-se todas as arestas
                     foreach (Node n in listaNos)
+                        foreach (Edge e in n.Edges)
+                            if(!listaArestas.Contains(e))
+                                listaArestas.Add(e);
+
+                    menorAresta = null;
+                    //pega aresta de maior valor na lista
+                    foreach (Edge e in listaArestas)
+                        if (cost < e.Cost)
+                            cost = e.Cost;
+                    //emcontra a aresta de menor custo
+                    //armazena a aresta de menor custo na lista de aresta de menor custo
+                        
+                    foreach (Edge e in listaArestas)
                     {
-                        if (n.Edges.Count != 0)
+
+                        if (cost > e.Cost && !listaArestasMenorCusto.Contains(e)&&!listaNos.Contains(e.To))
                         {
-                            no = this.Find(n.Name);
-                            foreach (Edge e in n.Edges)
-                            {
-                                if (arestaMenorCusto == null)
-                                {
-                                    arestaMenorCusto = e;
-                                }
-                                if (e.Cost < arestaMenorCusto.Cost && !listaNos.Contains(e.To))
-                                {
-                                    arestaMenorCusto = e;
-                                }
-                            }
+                            cost = e.Cost;
+                            menorAresta = e;
                         }
+
                     }
-                    if (!listaNos.Contains(arestaMenorCusto.To))
+                    //se aresta for encontrada adiciona na lista de menor aresta
+
+                    if (menorAresta != null)
+
                     {
-                        listaArestas.Add(arestaMenorCusto);
-                        listaNos.Add(arestaMenorCusto.To);
-                        arvore.AddNode(arestaMenorCusto.To.Name);
-                        arvore.AddEdge(arestaMenorCusto.From.Name, arestaMenorCusto.To.Name, arestaMenorCusto.Cost);
+
+                        listaNos.Add(menorAresta.To);
+
+                        listaArestasMenorCusto.Add(menorAresta);
+
+                        arvore.AddNode(menorAresta.From.Name);
+                        arvore.AddNode(menorAresta.To.Name);
+                        arvore.AddEdge(menorAresta.From.Name, menorAresta.To.Name, menorAresta.Cost);
+                        arvore.AddEdge(menorAresta.To.Name, menorAresta.From.Name, menorAresta.Cost);
                     }
+
                     contadorNos++;
-                    arestaMenorCusto = null;
                 } while (arvore.nodes.Count != contadorNos);
+
             }
             return arvore;
         }
@@ -251,27 +268,37 @@ namespace ProjetoGrafos.DataStructure
             Edge arestaMenorCusto=null;
             List<Edge> listaArestas = new List<Edge>();
             List<Edge> listaMenorCustoArestas = new List<Edge>();
+            List<Node> nosVisitados = new List<Node>();
             foreach (Node n in this.nodes)
                 foreach (Edge e in n.Edges)
                     listaArestas.Add(e);
             
             foreach (Node n in this.nodes)
                 arvore.AddNode(n.Name);
-
+            
+            
+            //ordena todas as arestas por ordem
             while(listaArestas.Count!= 0)
             {
                 arestaMenorCusto = listaArestas[0];
                 foreach (Edge e in listaArestas)
-                    if (e.Cost < arestaMenorCusto.Cost)
+                    if (e.Cost <= arestaMenorCusto.Cost)
                         arestaMenorCusto = e;
                 listaMenorCustoArestas.Add(arestaMenorCusto);
                 listaArestas.Remove(arestaMenorCusto);
             }
-            
+
+            //armazena nos dentro de uma lista para conferir
+            nosVisitados.Add(listaMenorCustoArestas[0].From);
             foreach (Edge e in listaMenorCustoArestas)
             {
-                if(arvore.Find(e.From.Name).Edges.Count==0)
-                arvore.AddEdge(e.From.Name, e.To.Name, e.Cost);
+                //para cada no se ele ainda nao foi adicionado armazene na arvore
+                if(!nosVisitados.Contains(e.To))
+                {
+                    nosVisitados.Add(e.To);
+                    arvore.AddEdge(e.From.Name, e.To.Name, e.Cost);
+                    arvore.AddEdge(e.To.Name, e.From.Name, e.Cost);
+                }
             }
             
             return arvore;

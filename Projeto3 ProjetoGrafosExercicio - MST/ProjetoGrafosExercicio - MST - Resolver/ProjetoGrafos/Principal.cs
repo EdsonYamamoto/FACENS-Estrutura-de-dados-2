@@ -156,6 +156,7 @@ namespace ProjetoGrafos
                 string nodeFrom = (cmbNodeFrom.SelectedItem as EDA.Node).Name;
                 double cost = Double.Parse(txtCost.Text);
                 // Adiciona arco..
+                this.graph.AddEdge(nodeTo, nodeFrom, cost);
                 this.graph.AddEdge(nodeFrom, nodeTo, cost);
             }
             SetGraphControls(this.graph);
@@ -254,15 +255,25 @@ namespace ProjetoGrafos
             this.graph.AddNode("5");
 
             this.graph.AddEdge("1", "2", 50);
+            this.graph.AddEdge("2", "1", 50);
             this.graph.AddEdge("1", "3", 30);
+            this.graph.AddEdge("3", "1", 30);
+            this.graph.AddEdge("4", "1", 5);
             this.graph.AddEdge("1", "4", 5);
+            this.graph.AddEdge("5", "1", 3);
             this.graph.AddEdge("1", "5", 3);
             this.graph.AddEdge("2", "3", 45);
+            this.graph.AddEdge("3", "2", 45);
             this.graph.AddEdge("2", "4", 90);
+            this.graph.AddEdge("4", "2", 90);
             this.graph.AddEdge("2", "5", 7);
+            this.graph.AddEdge("5", "2", 7);
             this.graph.AddEdge("3", "4", 9);
+            this.graph.AddEdge("4", "3", 9);
             this.graph.AddEdge("3", "5", 10);
+            this.graph.AddEdge("5", "3", 10);
             this.graph.AddEdge("4", "5", 13);
+            this.graph.AddEdge("5", "4", 13);
             //            }
             SetGraphControls(this.graph);
         }

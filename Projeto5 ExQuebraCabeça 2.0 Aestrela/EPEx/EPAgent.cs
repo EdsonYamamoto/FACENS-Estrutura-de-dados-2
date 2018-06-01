@@ -14,6 +14,7 @@ namespace EP
         private int[] initState;
         private int[] target;
         private int size;
+        private Graph solucao;
         private Dictionary<string, Node> dictNos = new Dictionary<string, Node>();
 
         /// <summary>
@@ -25,6 +26,7 @@ namespace EP
             initState = InitialState;
             target = Target;
             this.size = size;
+            solucao = new Graph();
         }
 
         /// <summary>
@@ -58,6 +60,8 @@ namespace EP
                     if (n.Name == getName(target)) return BuildAnswer(n);
 
                     lstSucesso = GetSucessors(n);
+                    foreach (Node nozin in lstSucesso)
+                        solucao.AddNode(nozin.Name, nozin.Info);
 
                     if (lstSucesso != null)
                         foreach (Node node in lstSucesso) fila.Enqueue(node);
@@ -67,17 +71,36 @@ namespace EP
             return null;
 
         }
-
-        private List<Node> GetSucessors(Node n)
+        private int ImprimirCondAtual(Node n)
         {
             int custoAtualTotal;
+            int aux = 0;
+            int posicao_branco = BuscaBranco((int[])n.Info);
+            custoAtualTotal = custoTotal((int[])n.Info);
+            n.Nivel = custoAtualTotal;
+            Console.WriteLine("Custo total atual: " + custoAtualTotal + " ");
+            foreach (int numero in (int[])n.Info)
+            {
+                aux++;
+                Console.Write(numero);
+                if (aux % size == 0)
+                {
+                    Console.WriteLine();
+                }
+            }
+            return custoAtualTotal;
+        }
+        private List<Node> GetSucessors(Node n)
+        {
             List<Node> retorno = new List<Node>();
             int posicao_branco = BuscaBranco((int[])n.Info);
 
             int x = posicao_branco / size;
             int y = posicao_branco % size;
-            custoAtualTotal = custoTotal((int[])n.Info);
-            Console.WriteLine(custoAtualTotal);
+            
+
+            Console.WriteLine();
+
             if (x - 1 >= 0)
             {
                 int[] v = (int[])((int[])n.Info).Clone();
@@ -88,6 +111,14 @@ namespace EP
 
                 Node novo = new Node(getName(v), v,0);
                 novo.AddEdge(n, v[posicao_branco]);
+
+                if (novo.Edges[novo.Edges.Count-1].From==null)
+                    solucao.AddNode(novo.Name, 0);
+                else
+                {
+                    solucao.AddNode(novo.Name, novo.Edges[novo.Edges.Count - 1].From.Nivel + 1);
+                    solucao.AddEdge(n.Name, novo.Name, ImprimirCondAtual(novo));
+                }
 
                 retorno.Add(novo);
             }
@@ -103,7 +134,17 @@ namespace EP
                 Node novo = new Node(getName(v), v, 0);
                 novo.AddEdge(n, v[posicao_branco]);
 
+                if (novo.Edges[novo.Edges.Count - 1].From != null)
+                {
+                    solucao.AddNode(novo.Name, novo.Edges[novo.Edges.Count - 1].From.Nivel + 1);
+                    solucao.AddEdge(n.Name, novo.Name, ImprimirCondAtual(novo));
+                }
+                else
+                    solucao.AddNode(novo.Name, 0);
+
                 retorno.Add(novo);
+
+
             }
             
             if (y - 1 >=0)
@@ -117,6 +158,14 @@ namespace EP
                 Node novo = new Node(getName(v), v, 0);
                 novo.AddEdge(n, v[posicao_branco]);
 
+                if (novo.Edges[novo.Edges.Count - 1].From != null)
+                {
+                    solucao.AddNode(novo.Name, novo.Edges[novo.Edges.Count - 1].From.Nivel + 1);
+                    solucao.AddEdge(n.Name, novo.Name, ImprimirCondAtual(novo));
+                }
+                else
+                    solucao.AddNode(novo.Name, 0);
+                
                 retorno.Add(novo);
             }
 
@@ -130,6 +179,15 @@ namespace EP
 
                 Node novo = new Node(getName(v), v, 0);
                 novo.AddEdge(n, v[posicao_branco]);
+
+                if (novo.Edges[novo.Edges.Count - 1].From != null)
+                {
+                    solucao.AddNode(novo.Name, novo.Edges[novo.Edges.Count - 1].From.Nivel + 1);
+                    solucao.AddEdge(n.Name, novo.Name, ImprimirCondAtual(novo));
+                }
+                else
+                    solucao.AddNode(novo.Name, 0);
+
 
                 retorno.Add(novo);
             }
@@ -186,18 +244,22 @@ namespace EP
             foreach (int valor in posicao)
             {
 
-                xInicial = Array.IndexOf(posicao,valor) / size;
-                yInicial = Array.IndexOf(posicao, valor) % size;
+                xInicial = valor / size;
+                yInicial = valor % size;
                 xFinal = valorReal / size;
                 yFinal = valorReal % size;
-                Console.WriteLine(valor);
-                Console.WriteLine("xIni:"+xInicial + " yIni:" + yInicial );
+                //Console.WriteLine(valor);
+                //Console.WriteLine("xIni:"+xInicial + " yIni:" + yInicial );
 
-                Console.WriteLine(valorReal);
-                Console.WriteLine("XFim:" + xFinal + " yFim:" + yFinal);
-                custo += (xInicial - xFinal) + (yInicial - yFinal);
+                //Console.WriteLine(valorReal);
+                //Console.WriteLine("XFim:" + xFinal + " yFim:" + yFinal);
+
+                custo += Math.Abs(xInicial - xFinal) + Math.Abs(yInicial - yFinal);
+                //Console.WriteLine("xIni:"+xInicial+" xFin:" + xFinal);
+                //Console.WriteLine("yIni:" + yInicial + " yFin:" + yFinal);
                 valorReal++;
             }
+            //Console.WriteLine("custo total: "+custo);
 
             return custo;
         }

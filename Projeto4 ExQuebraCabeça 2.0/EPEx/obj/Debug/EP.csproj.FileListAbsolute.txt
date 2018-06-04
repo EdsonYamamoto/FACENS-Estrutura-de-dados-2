@@ -7,3 +7,12 @@ C:\Users\Edson\Downloads\Experimento4\Exercicio 4 ExQuebraCabeça 2.0\EPEx\obj\D
 C:\Users\Edson\Downloads\Experimento4\Exercicio 4 ExQuebraCabeça 2.0\EPEx\obj\Debug\EP.csproj.CoreCompileInputs.cache
 C:\Users\Edson\Downloads\Experimento4\Exercicio 4 ExQuebraCabeça 2.0\EPEx\obj\Debug\EP.exe
 C:\Users\Edson\Downloads\Experimento4\Exercicio 4 ExQuebraCabeça 2.0\EPEx\obj\Debug\EP.pdb
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto4 ExQuebraCabeça 2.0\EPEx\bin\Debug\EP.exe.config
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto4 ExQuebraCabeça 2.0\EPEx\bin\Debug\EP.exe
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto4 ExQuebraCabeça 2.0\EPEx\bin\Debug\EP.pdb
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto4 ExQuebraCabeça 2.0\EPEx\obj\Debug\EP.csprojResolveAssemblyReference.cache
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto4 ExQuebraCabeça 2.0\EPEx\obj\Debug\EP.EP.resources
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto4 ExQuebraCabeça 2.0\EPEx\obj\Debug\EP.csproj.GenerateResource.cache
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto4 ExQuebraCabeça 2.0\EPEx\obj\Debug\EP.csproj.CoreCompileInputs.cache
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto4 ExQuebraCabeça 2.0\EPEx\obj\Debug\EP.exe
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto4 ExQuebraCabeça 2.0\EPEx\obj\Debug\EP.pdb

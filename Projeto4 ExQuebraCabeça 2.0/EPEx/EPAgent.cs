@@ -13,16 +13,18 @@ namespace EP
     {
         private int[] initState;
         private int[] target;
+        private int tamanho;
         private Dictionary<string, Node> dictNos = new Dictionary<string, Node>();
 
         /// <summary>
         /// Creating the agent and setting the initialstate plus target
         /// </summary>
         /// <param name="InitialState"></param>
-        public EightPuzzle(int[] InitialState, int[] Target)
+        public EightPuzzle(int[] InitialState, int[] Target, int tamanho)
         {
             initState = InitialState;
             target = Target;
+            this.tamanho = tamanho;
         }
 
         /// <summary>
@@ -71,13 +73,13 @@ namespace EP
             List<Node> retorno = new List<Node>();
             int posicao_branco = BuscaBranco((int[])n.Info);
 
-            int x = posicao_branco / 3;
-            int y = posicao_branco % 3;
+            int x = posicao_branco / tamanho;
+            int y = posicao_branco % tamanho;
 
             if (x - 1 >= 0)
             {
                 int[] v = (int[])((int[])n.Info).Clone();
-                int pos_troca = (x - 1) * 3 + y;
+                int pos_troca = (x - 1) * tamanho + y;
 
                 v[posicao_branco] = v[pos_troca];
                 v[pos_troca] = 0;
@@ -88,10 +90,10 @@ namespace EP
                 retorno.Add(novo);
             }
 
-            if (x + 1 < 3)
+            if (x + 1 < tamanho)
             {
                 int[] v = (int[])((int[])n.Info).Clone();
-                int pos_troca = (x + 1) * 3 + y;
+                int pos_troca = (x + 1) * tamanho + y;
 
                 v[posicao_branco] = v[pos_troca];
                 v[pos_troca] = 0;
@@ -105,7 +107,7 @@ namespace EP
             if (y - 1 >= 0)
             {
                 int[] v = (int[])((int[])n.Info).Clone();
-                int pos_troca = (y - 1) + (3 * x);
+                int pos_troca = (y - 1) + (tamanho * x);
 
                 v[posicao_branco] = v[pos_troca];
                 v[pos_troca] = 0;
@@ -116,10 +118,10 @@ namespace EP
                 retorno.Add(novo);
             }
 
-            if (y + 1 < 3)
+            if (y + 1 < tamanho)
             {
                 int[] v = (int[])((int[])n.Info).Clone();
-                int pos_troca = (y + 1) + (3 * x);
+                int pos_troca = (y + 1) + (tamanho * x);
 
                 v[posicao_branco] = v[pos_troca];
                 v[pos_troca] = 0;

@@ -1,0 +1,7 @@
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto6 Fluxos\Fluxos\Fluxos\bin\Debug\Fluxos.exe.config
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto6 Fluxos\Fluxos\Fluxos\bin\Debug\Fluxos.exe
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto6 Fluxos\Fluxos\Fluxos\bin\Debug\Fluxos.pdb
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto6 Fluxos\Fluxos\Fluxos\obj\Debug\Fluxos.csprojResolveAssemblyReference.cache
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto6 Fluxos\Fluxos\Fluxos\obj\Debug\Fluxos.csproj.CoreCompileInputs.cache
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto6 Fluxos\Fluxos\Fluxos\obj\Debug\Fluxos.exe
+C:\Users\Edson\Documents\GitHub\FACENS-Estrutura-de-dados-2\Projeto6 Fluxos\Fluxos\Fluxos\obj\Debug\Fluxos.pdb

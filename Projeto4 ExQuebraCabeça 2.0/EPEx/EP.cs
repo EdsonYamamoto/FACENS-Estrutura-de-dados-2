@@ -269,7 +269,7 @@ namespace EP
             {
                 solution[i] = i;
             }
-            EightPuzzle ComputerAgent = new EightPuzzle(table, solution);
+            EightPuzzle ComputerAgent = new EightPuzzle(table, solution, size);
 
             // Writes the solution to the tet box
             int[] res = ComputerAgent.GetSolution();

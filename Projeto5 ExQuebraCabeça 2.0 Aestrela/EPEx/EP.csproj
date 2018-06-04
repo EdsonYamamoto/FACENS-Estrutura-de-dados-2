@@ -113,6 +113,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataStructure\DadosPrioridade.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Content Include="App.ico" />
     <Compile Include="AssemblyInfo.cs">

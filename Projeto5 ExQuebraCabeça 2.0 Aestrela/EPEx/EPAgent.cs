@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Linq;
+using EP.DataStructure;
 using ProjetoGrafos.DataStructure;
 
 namespace EP
@@ -11,22 +11,20 @@ namespace EP
     /// </summary>
     public class EightPuzzle : Graph
     {
+        private int tamLado;
         private int[] initState;
         private int[] target;
-        private int size;
-        private Graph solucao;
-        private Dictionary<string, Node> dictNos = new Dictionary<string, Node>();
+        private HashSet<string> caminhosEncontrados = new HashSet<string>();
 
         /// <summary>
         /// Creating the agent and setting the initialstate plus target
         /// </summary>
         /// <param name="InitialState"></param>
-        public EightPuzzle(int[] InitialState, int[] Target, int size)
+        public EightPuzzle(int[] InitialState, int[] Target)
         {
             initState = InitialState;
             target = Target;
-            this.size = size;
-            solucao = new Graph();
+            tamLado = Convert.ToInt32(Math.Sqrt(InitialState.Count()));
         }
 
         /// <summary>
@@ -43,226 +41,166 @@ namespace EP
         /// <returns></returns>
         private int[] FindSolution()
         {
-            Queue<Node> fila = new Queue<Node>();
-            Node n0 = new Node(getName(initState), initState, 0);
-            List<Node> lstSucesso = null;
+            Stack<DadosPrioridade> filaPrioridade = new Stack<DadosPrioridade>();
+            DadosPrioridade dadosDoNoPrioridade = new DadosPrioridade();
+            Node noInicial = new Node(GetAName(initState), initState, 0);
 
-            fila.Enqueue(n0);
+            dadosDoNoPrioridade.nivel = noInicial.Nivel;
+            dadosDoNoPrioridade.avaliacaoEstado = FuncAvaliacao(noInicial);
+            dadosDoNoPrioridade.no = noInicial;
 
-            while (fila.Count > 0)
+            filaPrioridade.Push(dadosDoNoPrioridade);
+            caminhosEncontrados.Add(noInicial.Name);
+            List<Node> sucessores = null;
+
+            while (filaPrioridade.Count > 0)
             {
-                Node n = fila.Dequeue();
+                
+                dadosDoNoPrioridade = filaPrioridade.Pop();
+                Node n = dadosDoNoPrioridade.no;
 
-                if (!dictNos.ContainsKey(n.Name))
+                if (TargetFound((int[])n.Info))
                 {
-                    dictNos.Add(n.Name, n);
+                    return BuildAnswer(n);
+                }
 
-                    if (n.Name == getName(target)) return BuildAnswer(n);
-
-                    lstSucesso = GetSucessors(n);
-                    foreach (Node nozin in lstSucesso)
-                        solucao.AddNode(nozin.Name, nozin.Info);
-
-                    if (lstSucesso != null)
-                        foreach (Node node in lstSucesso) fila.Enqueue(node);
+                sucessores = RetornaSucessores(n);
+                foreach (Node node in sucessores)
+                {
+                    if (!caminhosEncontrados.Contains(node.Name))
+                    {
+                        caminhosEncontrados.Add(node.Name);
+                        dadosDoNoPrioridade = new DadosPrioridade();
+                        dadosDoNoPrioridade.nivel = noInicial.Nivel;
+                        dadosDoNoPrioridade.avaliacaoEstado = FuncAvaliacao(node);
+                        dadosDoNoPrioridade.no = node;
+                        filaPrioridade.Push(dadosDoNoPrioridade);
+                    }
                 }
             }
 
             return null;
-
-        }
-        private int ImprimirCondAtual(Node n)
-        {
-            int custoAtualTotal;
-            int aux = 0;
-            int posicao_branco = BuscaBranco((int[])n.Info);
-            custoAtualTotal = custoTotal((int[])n.Info);
-            n.Nivel = custoAtualTotal;
-            Console.WriteLine("Custo total atual: " + custoAtualTotal + " ");
-            foreach (int numero in (int[])n.Info)
-            {
-                aux++;
-                Console.Write(numero);
-                if (aux % size == 0)
-                {
-                    Console.WriteLine();
-                }
-            }
-            return custoAtualTotal;
-        }
-        private List<Node> GetSucessors(Node n)
-        {
-            List<Node> retorno = new List<Node>();
-            int posicao_branco = BuscaBranco((int[])n.Info);
-
-            int x = posicao_branco / size;
-            int y = posicao_branco % size;
-            
-
-            Console.WriteLine();
-
-            if (x - 1 >= 0)
-            {
-                int[] v = (int[])((int[])n.Info).Clone();
-                int pos_troca = (x - 1) * size + y;
-
-                v[posicao_branco] = v[pos_troca];
-                v[pos_troca] = 0;
-
-                Node novo = new Node(getName(v), v,0);
-                novo.AddEdge(n, v[posicao_branco]);
-
-                if (novo.Edges[novo.Edges.Count-1].From==null)
-                    solucao.AddNode(novo.Name, 0);
-                else
-                {
-                    solucao.AddNode(novo.Name, novo.Edges[novo.Edges.Count - 1].From.Nivel + 1);
-                    solucao.AddEdge(n.Name, novo.Name, ImprimirCondAtual(novo));
-                }
-
-                retorno.Add(novo);
-            }
-
-            if (x + 1 < size)
-            {
-                int[] v = (int[])((int[])n.Info).Clone();
-                int pos_troca = (x + 1) * size + y;
-
-                v[posicao_branco] = v[pos_troca];
-                v[pos_troca] = 0;
-
-                Node novo = new Node(getName(v), v, 0);
-                novo.AddEdge(n, v[posicao_branco]);
-
-                if (novo.Edges[novo.Edges.Count - 1].From != null)
-                {
-                    solucao.AddNode(novo.Name, novo.Edges[novo.Edges.Count - 1].From.Nivel + 1);
-                    solucao.AddEdge(n.Name, novo.Name, ImprimirCondAtual(novo));
-                }
-                else
-                    solucao.AddNode(novo.Name, 0);
-
-                retorno.Add(novo);
-
-
-            }
-            
-            if (y - 1 >=0)
-            {
-                int[] v = (int[])((int[])n.Info).Clone();
-                int pos_troca = (y - 1) + (size * x);
-
-                v[posicao_branco] = v[pos_troca];
-                v[pos_troca] = 0;
-
-                Node novo = new Node(getName(v), v, 0);
-                novo.AddEdge(n, v[posicao_branco]);
-
-                if (novo.Edges[novo.Edges.Count - 1].From != null)
-                {
-                    solucao.AddNode(novo.Name, novo.Edges[novo.Edges.Count - 1].From.Nivel + 1);
-                    solucao.AddEdge(n.Name, novo.Name, ImprimirCondAtual(novo));
-                }
-                else
-                    solucao.AddNode(novo.Name, 0);
-                
-                retorno.Add(novo);
-            }
-
-            if (y + 1 < size)
-            {
-                int[] v = (int[])((int[])n.Info).Clone();
-                int pos_troca = (y + 1) + (size * x);
-
-                v[posicao_branco] = v[pos_troca];
-                v[pos_troca] = 0;
-
-                Node novo = new Node(getName(v), v, 0);
-                novo.AddEdge(n, v[posicao_branco]);
-
-                if (novo.Edges[novo.Edges.Count - 1].From != null)
-                {
-                    solucao.AddNode(novo.Name, novo.Edges[novo.Edges.Count - 1].From.Nivel + 1);
-                    solucao.AddEdge(n.Name, novo.Name, ImprimirCondAtual(novo));
-                }
-                else
-                    solucao.AddNode(novo.Name, 0);
-
-
-                retorno.Add(novo);
-            }
-
-            return retorno;
-            //throw new NotImplementedException();
         }
 
-        private string getName(int[] posicao)
+        private string GetAName(int[] info)
         {
-            string ret = "";
+            string name = "";
+            for (int i = 0; i < info.Length; ++i)
+            {
+                name += info[i].ToString() + ",";
+            }
+            name += "#";
 
-            foreach (int i in posicao)
-                ret += i.ToString();
-
-            return ret;
+            return name.Replace(",#", "");
         }
 
-        private int BuscaBranco(int[] posicao)
+        private int RetornaPosicaoVazia(int[] info)
         {
-            foreach (int i in posicao)
-                if (posicao[i] == 0) return i;
+            foreach (int i in info)
+                if (info[i] == 0) return i;
 
             return 0;
         }
 
+        private List<Node> RetornaSucessores(Node n)
+        {
+            List<Node> lstSucessores = new List<Node>();
+
+            int posicaoVazia = RetornaPosicaoVazia((int[])n.Info);
+
+            // Peça vazia para a esquerda
+            if (posicaoVazia % tamLado != 0)
+            {
+                int[] novoSucessor = new int[tamLado * tamLado];
+                Array.Copy((int[])n.Info, novoSucessor, tamLado * tamLado);
+
+                novoSucessor[posicaoVazia - 1] = novoSucessor[posicaoVazia];
+                novoSucessor[posicaoVazia] = ((int[])n.Info)[posicaoVazia - 1];
+
+                Node aux = new Node(GetAName(novoSucessor), novoSucessor, n.Nivel + 1);
+                aux.AddEdge(n, novoSucessor[posicaoVazia]);
+                lstSucessores.Add(aux);
+            }
+            // Peça vazia para a direita
+            if (posicaoVazia % tamLado != tamLado - 1)
+            {
+                int[] novoSucessor = new int[tamLado * tamLado];
+                Array.Copy((int[])n.Info, novoSucessor, tamLado * tamLado);
+
+                novoSucessor[posicaoVazia + 1] = novoSucessor[posicaoVazia];
+                novoSucessor[posicaoVazia] = ((int[])n.Info)[posicaoVazia + 1];
+
+                Node aux = new Node(GetAName(novoSucessor), novoSucessor, n.Nivel + 1);
+                aux.AddEdge(n, novoSucessor[posicaoVazia]);
+                lstSucessores.Add(aux);
+            }
+            // Peça vazia para cima
+            if ((posicaoVazia / tamLado) > 0)
+            {
+                int[] novoSucessor = new int[tamLado * tamLado];
+                Array.Copy((int[])n.Info, novoSucessor, tamLado * tamLado);
+
+                novoSucessor[posicaoVazia - tamLado] = novoSucessor[posicaoVazia];
+                novoSucessor[posicaoVazia] = ((int[])n.Info)[posicaoVazia - tamLado];
+
+                Node aux = new Node(GetAName(novoSucessor), novoSucessor, n.Nivel + 1);
+                aux.AddEdge(n, novoSucessor[posicaoVazia]);
+                lstSucessores.Add(aux);
+            }
+            // Peça vazia para baixo
+            if ((posicaoVazia / tamLado) < tamLado - 1)
+            {
+                int[] novoSucessor = new int[tamLado * tamLado];
+                Array.Copy((int[])n.Info, novoSucessor, tamLado * tamLado);
+
+                novoSucessor[posicaoVazia + tamLado] = novoSucessor[posicaoVazia];
+                novoSucessor[posicaoVazia] = ((int[])n.Info)[posicaoVazia + tamLado];
+
+                Node aux = new Node(GetAName(novoSucessor), novoSucessor, n.Nivel + 1);
+                aux.AddEdge(n, novoSucessor[posicaoVazia]);
+                lstSucessores.Add(aux);
+            }
+
+            return lstSucessores;
+        }
+
         private int[] BuildAnswer(Node n)
         {
-            string result = "";
+            List<int> resultado = new List<int>();
 
             while (n.Edges.Count > 0)
             {
-                result = n.Edges[0].Cost.ToString() + ";" + result;
+                resultado.Add((int)n.Edges[0].Cost);
                 n = n.Edges[0].To;
             }
 
-            string[] splitResult = result.Split(';');
-            int[] v = new int[splitResult.Length];
+            resultado.Reverse();
 
-            for (int i = 0; i < splitResult.Length - 1; i++)
-                v[i] = Convert.ToInt32(splitResult[i]);
-
-            return v;
+            return resultado.ToArray();
         }
 
-        private int custoTotal(int[] posicao)
+        private bool TargetFound(int[] info)
         {
-            int xInicial;
-            int yInicial;
-            int xFinal;
-            int yFinal;
-            int custo = 0;
-            int valorReal = 0;
-            foreach (int valor in posicao)
+            return info.SequenceEqual(target);
+        }
+
+        private int FuncAvaliacao(Node n)
+        {
+            int[] blocoAtual = (int[])n.Info;
+            int totalErro = 0;
+
+            for (int i = 0; i < tamLado * tamLado; i++)
             {
+                for (int j = 0; j < tamLado * tamLado; j++)
+                {
+                    if (blocoAtual[i] != target[j]) continue;
 
-                xInicial = valor / size;
-                yInicial = valor % size;
-                xFinal = valorReal / size;
-                yFinal = valorReal % size;
-                //Console.WriteLine(valor);
-                //Console.WriteLine("xIni:"+xInicial + " yIni:" + yInicial );
-
-                //Console.WriteLine(valorReal);
-                //Console.WriteLine("XFim:" + xFinal + " yFim:" + yFinal);
-
-                custo += Math.Abs(xInicial - xFinal) + Math.Abs(yInicial - yFinal);
-                //Console.WriteLine("xIni:"+xInicial+" xFin:" + xFinal);
-                //Console.WriteLine("yIni:" + yInicial + " yFin:" + yFinal);
-                valorReal++;
+                    totalErro += Math.Abs(i % tamLado - j % tamLado) + Math.Abs(i / tamLado - j / tamLado);
+                    break;
+                }
             }
-            //Console.WriteLine("custo total: "+custo);
 
-            return custo;
+            return totalErro;
         }
     }
 }
-
